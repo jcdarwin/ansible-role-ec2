@@ -1,0 +1,13 @@
+---
+# This Playbook creates an EC2 instance!
+
+- hosts: local
+  connection: local
+  gather_facts: False
+  tags: ec2_create
+
+  tasks:
+  # ansible-playbook -l all main.yml -i ansible/hosts --tags create
+  - include: tasks/ec2_create.yml
+  # ansible-playbook -l all main.yml -i ansible/hosts --tags destroy
+  - include: tasks/ec2_destroy.yml

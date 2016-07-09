@@ -1,0 +1,20 @@
+- name: Get the facts about our instance
+  action: ec2_facts
+  register: ec2
+  tags: destroy
+
+- name: Terminate single instance
+  local_action:
+     module: ec2
+     state: absent
+     region: "{{ ansible_role_ec2.region }}"
+     instance_ids: "{{ ansible_ec2_instance_id }}"
+  tags: destroy
+
+- name: Remove the entry from the hosts file
+  local_action: lineinfile
+                dest='./ansible/hosts'
+                regexp='^{{ item.public_ip }}'
+                state=absent
+  with_items: "{{ ec2.instances }}"
+  tags: destroy
