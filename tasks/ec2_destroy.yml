@@ -1,6 +1,14 @@
+---
+
+- include_vars: "defaults/main.yml"
+  tags: destroy
+
 - name: Get the facts about our instance
   action: ec2_facts
   register: ec2
+  tags: destroy
+
+- debug: var=ec2
   tags: destroy
 
 - name: Terminate single instance
@@ -14,7 +22,6 @@
 - name: Remove the entry from the hosts file
   local_action: lineinfile
                 dest='./ansible/hosts'
-                regexp='^{{ item.public_ip }}'
+                regexp='^{{ ansible_ec2_public_ipv4 }}'
                 state=absent
-  with_items: "{{ ec2.instances }}"
   tags: destroy
