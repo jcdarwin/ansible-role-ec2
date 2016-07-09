@@ -24,7 +24,14 @@ Preusming a `requirements.yml` as follows:
     - name: ansible-role-ec2
     src: https://github.com/jcdarwin/ansible-role-ec2
 
-we can install the role locally:
+We can install the role locally, using a `requirements.yml` file:
+
+    # Install a role from GitHub
+    - name: ansible-role-ec2
+    src: https://github.com/jcdarwin/ansible-role-ec2
+    path: roles/
+
+Install the role:
 
     ansible-galaxy install -r requirements.yml -p ./roles
 
