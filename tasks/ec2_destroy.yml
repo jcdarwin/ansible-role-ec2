@@ -3,6 +3,12 @@
 - include_vars: "defaults/main.yml"
   tags: destroy
 
+- name: Ensure python is installed so we can use ec2_facts
+  apt:
+    pkg=python
+    state=latest
+  tags: destroy
+
 - name: Get the facts about our instance
   action: ec2_facts
   register: ec2
